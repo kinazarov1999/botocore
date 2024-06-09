@@ -2359,6 +2359,16 @@
       "output":{"shape":"DescribePlacementGroupsResult"},
       "documentation":"<p>Describes the specified placement groups or all of your placement groups. For more information, see <a href=\"https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html\">Placement groups</a> in the <i>Amazon EC2 User Guide</i>.</p>"
     },
+    "DescribeQuotas":{
+      "name":"DescribeQuotas",
+      "http":{
+        "method":"POST",
+        "requestUri":"/"
+      },
+      "input":{"shape":"DescribeQuotasRequest"},
+      "output":{"shape":"DescribeQuotasResult"},
+      "documentation":"<p>Describes the specified quotas or all of quotas.</p>"
+    },
     "DescribePrefixLists":{
       "name":"DescribePrefixLists",
       "http":{
@@ -16688,6 +16698,27 @@
           "shape":"String",
           "documentation":"<p>The token to use to retrieve the next page of results. This value is <code>null</code> when there are no more results to return.</p>",
           "locationName":"nextToken"
+        }
+      }
+    },
+    "DescribeQuotasRequest":{
+      "type":"structure",
+      "required":["QuotaNames"],
+      "members":{
+        "QuotaNames":{
+          "shape":"QuotaNameStringList",
+          "documentation":"<p>The names of quotas.</p>",
+          "location": "quotaName"
+        }
+      }
+    },
+    "DescribeQuotasResult":{
+      "type":"structure",
+      "members":{
+        "Quotas":{
+          "shape":"QuotaList",
+          "documentation":"<p>Information about the quotas.</p>",
+          "locationName":"quotaSet"
         }
       }
     },
@@ -33567,6 +33598,109 @@
       "type":"list",
       "member":{
         "shape":"ScheduledInstance",
+        "locationName":"item"
+      }
+    },
+    "Quota":{
+      "type":"structure",
+      "members":{
+        "Name":{
+          "shape":"QuotaName",
+          "documentation":"<p>The name of the quota.</p>",
+          "locationName":"name"
+        },
+        "Values":{
+          "shape":"QuotaValueList",
+          "documentation":"<p>The values of the quota.</p>",
+          "localtionName":"valueSet"
+        }
+      }
+    },
+    "QuotaName":{
+      "type":"string"
+    },
+    "QuotaNameList":{
+      "type":"list",
+      "member":{
+        "shape":"QuotaName",
+        "locationName":"item"
+      }
+    },
+    "QuotaLimit":
+      "type":"structure",
+      "members":{
+        "Type":{
+          "shape":"String",
+          "documentation":"<p>The type of the limit.</p>",
+          "locationName":"type"
+        },
+        "Value":{
+          "shape":"String",
+          "documentation":"<p>The value of the limit.</p>",
+          "locationName":"value"
+        }
+      }
+    },
+    "QuotaLimitList":{
+      "type":"list",
+      "member":{
+        "shape":"QuotaLimit",
+        "locationName": "item"
+      }
+    },
+    "QuotaList":{
+      "type":"list",
+      "member":{
+        "shape":"Quota",
+        "locationName":"item"
+      }
+    },
+    "QuotaValue":{
+      "type":"structure",
+      "members":{
+        "AvailabilityZone":{
+          "shape":"String",
+          "documentation":"<p>The availability zone of the quota.</p>",
+          "locationName":"availabilityZone"
+        },
+        "Limits":{
+          "shape":"QuotaLimitList",
+          "documentation":"<p>The list of limit values.</p>",
+          "locationName":"limitSet"
+        },
+        "Usages":{
+          "shape":"QuotaUsageList",
+          "documentation":"<p>The list of usage values.</p>",
+          "locationName":"usageSet"
+        }
+      }
+    },
+    "QuotaUsage":
+      "type":"structure",
+      "members":{
+        "Type":{
+          "shape":"String",
+          "documentation":"<p>The type of the usage.</p>",
+          "locationName":"type"
+        },
+        "Value":{
+          "shape":"String",
+          "documentation":"<p>The value of the usage.</p>",
+          "locationName":"value"
+        }
+      }
+    },
+    "QuotaUsageList":{
+      "type":"list",
+      "member":{
+        "shape":"QuotaUsage",
+        "locationName": "item"
+      }
+    },
+    "QuotaValueList":{
+      "type":"list",
+      "member":{
+        "shape":"QuotaValue",
         "locationName":"item"
       }
     },
